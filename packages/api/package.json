@@ -5,8 +5,7 @@
   "scripts": {
     "build": "tsc",
     "lint": "eslint --ext .ts src/**",
-    "format-check": "prettier -c ./",
-    "format-fix": "prettier -w ./",
+    "format": "prettier -c ./",
     "test": "jest",
     "serve": "node ./dist/index.js"
   },
