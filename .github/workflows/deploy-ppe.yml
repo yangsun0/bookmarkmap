@@ -6,7 +6,7 @@ on:
 
 env:
   DOCKERHUB_USERNAME: gapeld
-  IMAGE_NAME: gapeld/bookmarkmap_api_ppe
+  IMAGE_NAME: gapeld/bookmarkmap-api-ppe
 
 
 jobs:
