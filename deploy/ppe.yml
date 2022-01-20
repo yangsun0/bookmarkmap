@@ -1,0 +1,61 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: bookmarkmap
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+  labels:
+    app: bookmarkmap
+spec:
+  rules:
+    - http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: bookmarkmap-api
+                port:
+                  number: 4000
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bookmarkmap-api
+  labels:
+    app: bookmarkmap
+    component: api
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: bookmarkmap
+      component: api
+  template:
+    metadata:
+      labels:
+        app: bookmarkmap
+        component: api
+    spec:
+      containers:
+        - name: bookmarkmap-api
+          image: gapeld/bookmarkmap-api-ppe
+          resources:
+            limits:
+              memory: 512Mi
+              cpu: "1"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bookmarkmap-api
+spec:
+  selector:
+    app: bookmarkmap
+    component: api
+  ports:
+    - port: 4000
