@@ -7,7 +7,7 @@ if (process.env["NODE_ENV"] !== "test") {
 }
 
 app.get("/", (req, res) => {
-  res.send("Hello World!");
+  res.send("Hello World 2!");
 });
 
 export default app;

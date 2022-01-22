@@ -66,3 +66,20 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           cache-from: ${{ env.IMAGE_NAME }}
           cache-to: type=inline
+
+      - name: Log image info
+        run: echo "${{ env.IMAGE_NAME }}:${{ steps.meta.outputs.version }}"
+
+      - name: Azure kubernetes set context
+        uses: azure/aks-set-context@v1.1
+        with:
+            creds: '${{ secrets.AZURE_CREDENTIALS }}'
+            resource-group: bookmarkmapppe
+            cluster-name: bookmarkmapclusterppe
+        id: login
+
+      - name: Deploy to Azure kubernetes cluster
+        uses: Azure/k8s-deploy@v1.5
+        with:
+          manifests: deploy/ppe.yml
+          images: ${{ env.IMAGE_NAME }}:${{ steps.meta.outputs.version }}
