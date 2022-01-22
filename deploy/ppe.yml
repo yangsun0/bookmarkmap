@@ -44,6 +44,9 @@ spec:
         - name: bookmarkmap-api
           image: gapeld/bookmarkmap-api-ppe
           resources:
+            requests:
+              memory: 32Mi
+              cpu: "0.1"
             limits:
               memory: 512Mi
               cpu: "1"
